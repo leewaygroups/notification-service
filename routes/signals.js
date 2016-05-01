@@ -23,7 +23,7 @@ Signals look like this:
 function processMatch(subscription, signal) {
 
    opts = {
-     from: 'Simple Notification Service <kjwnotificationservice@gmail.com>',
+     from: 'Simple Notification Service <12345@gmail.com>',
      to: subscription.alertEndpoint,
      subject: subscription.eventTitle + ' happened at: ' + new Date(),
      body: signal.instancedata

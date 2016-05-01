@@ -7,5 +7,3 @@ and signaling of Events. When an Event is signaled then all subscribers receive 
 information specific to the signal.
 
 The service runs as a Node application and employs MongoDb as the backend.
-
-API information on the wiki
