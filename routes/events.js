@@ -4,11 +4,22 @@ var eventTypes = require('../lib/eventTypes');
 /** ****************************************
  * All routes return a promise.
  * 
+event object:
 {
 "_id": "353dfg34334bbnm34545345",
 "eventName": "CUSTOMER.SERVICE.New_Tecket",
 "eventType": "EventTypes.SYSTEM_NOTIFICATION"
 "eventSource": ['App.CustomerService']
+}
+
+sample subscription objects:
+{
+    "endpointType": "EMAIL",
+    "endpoints": [addr1, addr2, ...];
+},
+{
+    "endpointType": "API",
+    "endpoints": [api1, api2, ...];
 }
 ********************************************/
 exports.registerEvent = function (req, res) {

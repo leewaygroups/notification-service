@@ -1,63 +1,44 @@
-var mongo = require('mongodb');
-var BSON = mongo.BSONPure;
+var eventManager = require('../lib/db');
 
-var dbutils = require('../lib/dbutils.js');
-var mongoUri = dbutils.mongoUri;
- 
 var mailer = require('../lib/mailer.js');
-var _ = require ('underscore');
+var _ = require('underscore');
  
-/*
-
-Signals look like this:
+/***************************************************************
+ * Signals look like this:
 
   {
-     "eventTitle": "Large meteor strikes the moon",
+     "eventName": "Large meteor strikes the moon",
      "instancedata": "This one weighed more than 16 megatons!!"
   }
 
-
-*/
+***************************************************************/
 
 
 function processMatch(subscription, signal) {
+    var opts = {
+        from: 'Simple Notification Service <12345@gmail.com>',
+        to: subscription.alertEndpoint,
+        subject: subscription.eventTitle + ' happened at: ' + new Date(),
+        body: signal.instancedata
+    }
 
-   opts = {
-     from: 'Simple Notification Service <12345@gmail.com>',
-     to: subscription.alertEndpoint,
-     subject: subscription.eventTitle + ' happened at: ' + new Date(),
-     body: signal.instancedata
-   }
-
-   // Send alert
-   mailer.sendMail(opts);
-
+    // Send alert
+    mailer.sendMail(opts);
 }
 
-  
-exports.processSignal = function(req, res) {
+exports.processSignal = function (req, res) {
     var signal = req.body;
     console.log('Processing Signal: ' + JSON.stringify(signal));
-
-  mongo.Db.connect(mongoUri, function (err, db) {
-    db.collection('subscriptions', function(err, collection) {
-      collection.find().toArray(function(err, items) {
-        matches = _.filter(items, function(sub){return sub.eventTitle == signal.eventTitle});
-        _.each(matches, function (sub) {processMatch(sub, signal)});
-        res.send(matches);
-      });   
+    eventManager.findByName(signal.eventName).then(function (event) {
+        if (event.subscriptions && event.subscriptions.length) {
+            var result = {};
+            result.processed = processMatch(event.subscriptions, signal);
+            result.logged = eventManager.logSignal(signal);
+            res.send(result);
+        } else {
+            res.send();
+        }
     });
-  });
-  
-  // Log reception of the signal
-  mongo.Db.connect(mongoUri, function (err, db) {
-    db.collection('signalLog', function(er, collection) {
-      collection.insert(signal, {safe:true}, function(err, result) {
-        db.close();
-      });
-    });
-  });
-
 }
  
  
