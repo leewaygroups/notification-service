@@ -13,7 +13,7 @@ var _ = require('underscore');
 
 ***************************************************************/
 
-
+//TODO: Logic to process signals for varying endpoint types
 function processMatch(subscription, signal) {
     var opts = {
         from: 'Simple Notification Service <12345@gmail.com>',
@@ -39,6 +39,17 @@ exports.processSignal = function (req, res) {
             res.send();
         }
     });
-}
- 
- 
+};
+
+exports.getAllSignalLogs = function (req, res) {
+    eventManager.getAllSignalLogs().then(function (signalLogs) {
+        res.send(signalLogs);
+    });
+};
+
+exports.getEventSignalLogs = function (req, res) {
+    var name = req.params.name;
+    eventManager.getEventSignalLogs(name).then(function (signalLogs) {
+        res.send(signalLogs);
+    });
+}; 

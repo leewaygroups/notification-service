@@ -1,7 +1,6 @@
 var express = require('express');
 var event = require('./routes/events');
 var signal = require('./routes/signals');
-var signallog = require('./routes/signallog');
 
 //var port = (process.env.PORT || 3000);
 var port = (process.env.VCAP_APP_PORT || 3000);
@@ -28,9 +27,8 @@ app.get('/events/:name/unsubscribe/', event.subscribe);
  
 console.log ('registering signal routes with express');
 app.post('/signals', signal.processSignal);
-
-console.log ('registering log routes with express');
-app.get('/signallog', signallog.findRecent);
+app.get('/signals', signal.getAllSignalLogs);
+app.get('/signals/:eventName', signal.getEventSignalLogs)
 
 console.log ('About to start listening');
 app.listen(port);
