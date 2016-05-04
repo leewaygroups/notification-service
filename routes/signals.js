@@ -12,18 +12,35 @@ var _ = require('underscore');
   }
 
 ***************************************************************/
-
-//TODO: Logic to process signals for varying endpoint types
-function processMatch(subscription, signal) {
-    var opts = {
+function emailHandler(subscription, signal){
+     var opts = {
         from: 'Simple Notification Service <12345@gmail.com>',
         to: subscription.alertEndpoint,
         subject: subscription.eventTitle + ' happened at: ' + new Date(),
         body: signal.instancedata
     }
-
+    
     // Send alert
     mailer.sendMail(opts);
+}
+
+function apiHandler(subscription, signal){
+    //TODO
+}
+
+function processMatch(subscriptions, signal) {
+    subscriptions.forEach(function (subscription) {
+        switch (subscription.endpointType) {
+            case "EMAIL":
+                emailHandler(subscription, signal);
+                break;
+            case "API":
+                apiHandler(subscription, signal);
+                break;
+            default:
+                break;
+        }
+    });
 }
 
 exports.processSignal = function (req, res) {
