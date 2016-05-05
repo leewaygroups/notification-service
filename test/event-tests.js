@@ -106,42 +106,43 @@ describe('Routing', function () {
           //Update Tests
           //
       
-           /*it('should successfully update a specific event', function(done) {
-            var profile = {
-              title: 'News flash 6 - revised'
+           it('should successfully update a specific event', function(done) {
+             var event = {
+                eventName: 'Classic ID10T',
+                eventType: 'NoBrainer'
             };
           request(url)
-          .put('/events/'+ newsFlash6id)
-          .send(profile)
+          .put('/events/'+ 'ID10T')
+          .send(event)
           .end(function(err, res) {
                 if (err) {
                   throw err;
                 }
                 res.should.have.status(200);
-                res.body.title.should.equal('News flash 6 - revised')
+                res.body.eventName.should.equal('Classic ID10T')
                 done();
               });
           });
       
-          it('should verify revised News flash 6 event', function(done) {
+          it('should verify updated event', function(done) {
           request(url)
-          .get('/events/'+ newsFlash6id)
+          .get('/events/'+ 'Classic ID10T')
           .end(function(err, res) {
                 if (err) {
                   throw err;
                 }
                 res.should.have.status(200);
-                res.body.should.have.property('title');
-                res.body.title.should.equal('News flash 6 - revised');
+                res.body.should.have.property('eventName');
+                res.body.eventName.should.equal('Classic ID10T');
                 done();
               });
           });
       
           //Delete tests
           //
-          it('should delete revised News flash 6 event', function(done) {
+          it('should delete Classic ID10T event', function(done) {
           request(url)
-          .del('/events/'+ newsFlash6id)
+          .del('/events/'+ 'Classic ID10T')
           .end(function(err, res) {
                 if (err) {
                   throw err;
@@ -151,7 +152,7 @@ describe('Routing', function () {
               });
           });
       
-          it('should now return two events', function(done) {
+         it('should now return two events', function(done) {
           request(url)
           .get('/events')
           .end(function(err, res) {
@@ -161,11 +162,11 @@ describe('Routing', function () {
                 res.should.have.status(200);
                 res.body.should.have.lengthOf(2);
                 eventsArray = JSON.parse(res.text);
-                assert.equal(eventsArray[0].title, 'News flash 7');
-                assert.equal(eventsArray[1].title, 'News flash 8');
+                assert.equal(eventsArray[0].eventName, 'May Day');
+                assert.equal(eventsArray[1].eventName, 'StackOverflow');
                 done();
               });
-          });*/
+          });
 
 
     });

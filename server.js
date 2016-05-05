@@ -14,11 +14,10 @@ app.configure(function () {
  
 console.log ('registering event routes with express');
 app.get('/events', event.findAll);
-app.get('/events/:id', event.findById);
-app.get('/events/:name', event.findByName);
 app.post('/events', event.registerEvent);
-app.put('/events/:id', event.updateEvent);
-app.delete('/events/:id', event.deleteEvent);
+app.get('/events/:name', event.findByName);
+app.put('/events/:name', event.updateEvent);
+app.delete('/events/:name', event.deleteEvent);
 
 console.log ('registering subscription routes with express');
 app.get('/events/:name/subscriptions/', event.eventSubscriptions);

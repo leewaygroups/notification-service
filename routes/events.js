@@ -30,29 +30,16 @@ exports.registerEvent = function (req, res) {
 };
 
 exports.updateEvent = function (req, res) {
-    var id = req.params.id;
+    var name = req.params.name;
     var event = req.body;
-    eventManager.update(event, id).then(function(result){
+    eventManager.update(event, name).then(function(result){
         res.send(result);
     });
 };
 
 exports.deleteEvent = function (req, res) {
-    var id = req.params.id;
-    eventManager.delete(id).then(function(result){
-        res.send(result);
-    });
-};
-
-exports.findById = function (req, res) {
-    var id = req.params.id;
-    eventManager.findById(id).then(function(result){
-        res.send(result);
-    });
-};
-
-exports.findAll = function (req, res) {
-    eventManager.findAll().then(function(result){
+    var name = req.params.name;
+    eventManager.delete(name).then(function(result){
         res.send(result);
     });
 };
@@ -60,6 +47,12 @@ exports.findAll = function (req, res) {
 exports.findByName = function (req, res) {
     var name = req.params.name;
     eventManager.findByName(name).then(function(result){
+        res.send(result);
+    });
+};
+
+exports.findAll = function (req, res) {
+    eventManager.findAll().then(function(result){
         res.send(result);
     });
 };
