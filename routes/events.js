@@ -67,16 +67,14 @@ exports.eventSubscriptions = function(req, res){
 }
 
 exports.subscribe = function (req, res) {
-    var subcr = req.body.subcr;
-    eventManager.subscribe(subcr).then(function(result){
+    eventManager.subscribe(req.body).then(function(result){
         res.send(result);
     });
 };
 
 exports.unsubscribe = function(req, res){
     var name = req.params.name;
-    var subcr = req.body.subcr;
-    eventManager.subscribe(name, subcr).then(function(result){
+    eventManager.unSubscribe(name, req.body).then(function(result){
         res.send(result);
     });
 };

@@ -21,7 +21,7 @@ describe('Routing', function () {
     describe('Event', function () {
         it('should successfully create a new event', function (done) {
             var event = {
-                eventName: 'May Day',
+                eventName: 'MayDay',
                 eventType: 'Emergency'
             };
             request(url)

@@ -27,8 +27,8 @@ app.delete('/events/:name', event.deleteEvent);
 
 console.log('registering subscription routes with express');
 app.get('/events/:name/subscriptions/', event.eventSubscriptions);
-app.get('/events/:name/subscribe/', event.subscribe);
-app.get('/events/:name/unsubscribe/', event.subscribe);
+app.post('/events/subscribe/', event.subscribe);
+app.post('/events/:name/unsubscribe/', event.unsubscribe);
 
 console.log('registering signal routes with express');
 app.post('/signals', signal.processSignal);
