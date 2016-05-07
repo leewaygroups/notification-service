@@ -14,12 +14,14 @@ event object:
 
 sample subscription objects:
 {
+    "eventName": "BlaBla"
     "endpointType": "EMAIL",
-    "endpoints": [addr1, addr2, ...];
+    "endpoints": addr;
 },
 {
+    "eventName": "BlaBla"
     "endpointType": "API",
-    "endpoints": [api1, api2, ...];
+    "endpoint": api;
 }
 ********************************************/
 exports.registerEvent = function (req, res) {
@@ -65,9 +67,8 @@ exports.eventSubscriptions = function(req, res){
 }
 
 exports.subscribe = function (req, res) {
-    var name = req.params.name;
     var subcr = req.body.subcr;
-    eventManager.subscribe(name, subcr).then(function(result){
+    eventManager.subscribe(subcr).then(function(result){
         res.send(result);
     });
 };
