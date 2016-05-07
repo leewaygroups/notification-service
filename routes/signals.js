@@ -12,11 +12,11 @@ var _ = require('underscore');
   }
 
 ***************************************************************/
-function emailHandler(subscription, signal){
-     var opts = {
+function emailHandler(subscription, signal) {
+    var opts = {
         from: 'Simple Notification Service <12345@gmail.com>',
-        to: subscription.alertEndpoint,
-        subject: subscription.eventTitle + ' happened at: ' + new Date(),
+        to: subscription.endpoint,
+        subject: subscription.eventName + ' happened at: ' + new Date(),
         body: signal.instancedata
     }
     
@@ -24,23 +24,26 @@ function emailHandler(subscription, signal){
     mailer.sendMail(opts);
 }
 
-function apiHandler(subscription, signal){
+function apiHandler(subscription, signal) {
     //TODO
 }
 
 function processMatch(subscriptions, signal) {
-    subscriptions.forEach(function (subscription) {
-        switch (subscription.endpointType) {
+    for (var i = 0; i < subscriptions.length; i++) {
+
+        switch (subscriptions[i].endpointType) {
             case "EMAIL":
-                emailHandler(subscription, signal);
+                emailHandler(subscriptions[i], signal);
                 break;
             case "API":
-                apiHandler(subscription, signal);
+                apiHandler(subscriptions[i], signal);
                 break;
             default:
                 break;
         }
-    });
+    }
+
+    return true;
 }
 
 exports.processSignal = function (req, res) {
@@ -50,7 +53,9 @@ exports.processSignal = function (req, res) {
         if (event.subscriptions && event.subscriptions.length) {
             var result = {};
             result.processed = processMatch(event.subscriptions, signal);
-            result.logged = eventManager.logSignal(signal);
+            result.signal = signal;
+
+            result.logged = eventManager.logSignal(result);
             res.send(result);
         } else {
             res.send();

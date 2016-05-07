@@ -31,9 +31,9 @@ app.post('/events/subscribe/', event.subscribe);
 app.post('/events/:name/unsubscribe/', event.unsubscribe);
 
 console.log('registering signal routes with express');
-app.post('/signals', signal.processSignal);
-app.get('/signals', signal.getAllSignalLogs);
-app.get('/signals/:eventName', signal.getEventSignalLogs)
+app.post('/signal', signal.processSignal);
+app.get('/signals/logs', signal.getAllSignalLogs);
+app.get('/signals/:eventName/logs', signal.getEventSignalLogs)
 
 console.log('About to start listening');
 app.listen(port);
