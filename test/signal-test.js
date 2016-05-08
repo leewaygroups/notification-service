@@ -23,6 +23,7 @@ module.exports = function () {
                 var subscr = {
                     eventName: "MayDay",
                     endpointType: "EMAIL",
+                    endpointName: "",
                     endpoint: 'leewaygroups@gmail.com'
                 };
 
@@ -42,6 +43,7 @@ module.exports = function () {
                 var subscr = {
                     eventName: "StackOverflow",
                     endpointType: "EMAIL",
+                    endpointName: "",
                     endpoint: 'leewaygroups@gmail.com'
                 };
 

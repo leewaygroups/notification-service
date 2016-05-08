@@ -21,6 +21,7 @@ sample subscription objects:
 {
     "eventName": "BlaBla"
     "endpointType": "API",
+    "endpointName"
     "endpoint": api;
 }
 ********************************************/

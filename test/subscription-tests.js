@@ -10,12 +10,14 @@ sample subscription objects:
     "_id": "521a5af259b05b8099000002"
     "eventName": "Mew"
     "endpointType": "EMAIL",
+    "endpointName": "",
     "endpoint": addr1;
 },
 {
     "_id": "521a5af259b05b8099000002"
     "eventName": "BlaBla"
     "endpointType": "API",
+    "endpointName": "slack",
     "endpoint": api;
 }
 
@@ -32,6 +34,7 @@ module.exports = function () {
                 var subscr = {
                     eventName: "MayDay",
                     endpointType: "EMAIL",
+                    endpointName: "",
                     endpoint: 'leewaygroups@gmail.com'
                 };
 
@@ -51,6 +54,7 @@ module.exports = function () {
                 var subscr = {
                     eventName: "MayDay",
                     endpointType: "EMAIL",
+                    endpointName: "",
                     endpoint: 'leewaygroups@gmail.com'
                 };
 
@@ -70,6 +74,7 @@ module.exports = function () {
                 var subscr = {
                     eventName: "StackOverflow",
                     endpointType: "EMAIL",
+                    endpointName: "",
                     endpoint: 'leewaygroups@gmail.com'
                 };
 

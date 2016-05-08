@@ -12,6 +12,39 @@ var _ = require('underscore');
   }
 
 ***************************************************************/
+var endpointNames = {
+    FB: "facebook",
+    TWITTER: 'twitter',
+    INSTAGRAM: 'instagram',
+    SLACK: 'slack',
+    SPARK: 'spark',
+    TWILLO: 'twillo'
+}
+
+var apiProcessesor = {
+    handleFB: function (subscription, signal) {
+        //TODO
+    },
+    handleTwitter: function (subscription, signal) {
+        //TODO
+    },
+    handleInstagram: function (subscription, signal) {
+        //TODO
+    },
+    handleSlack: function (subscription, signal) {
+        //TODO
+    },
+    handleSpark: function (subscription, signal) {
+        //TODO
+    },
+    handleTwillo: function (subscription, signal) {
+        //TODO
+    },
+    handleCustom: function (subscription, signal) {
+        //TODO
+    }
+};
+
 function emailHandler(subscription, signal) {
     var opts = {
         from: 'Simple Notification Service <12345@gmail.com>',
@@ -28,12 +61,35 @@ function emailHandler(subscription, signal) {
     } catch (err) {
         error = err
     }
-    
+
     return error;
 }
 
 function apiHandler(subscription, signal) {
     //TODO
+    switch (subscription.endpointName) {
+        case endpointNames.FB:
+            apiProcessesor.handleFB(subscription, signal);
+            break;
+        case endpointNames.TWITTER:
+            apiProcessesor.handleTwitter(subscription, signal);
+            break;
+        case endpointNames.INSTAGRAM:
+            apiProcessesor.handleInstagram(subscription, signal);
+            break;
+        case endpointNames.SLACK:
+            apiProcessesor.handleSlack(subscription, signal);
+            break;
+        case endpointNames.SPARK:
+            apiProcessesor.handleSpark(subscription, signal);
+            break;
+        case endpointNames.TWILLO:
+            apiProcessesor.handleTwillo(subscription, signal);
+            break;
+        default:
+            apiProcessesor.handleCustom(subscription, signal);
+            break;
+    }
 }
 
 function processMatch(subscriptions, signal) {
@@ -66,7 +122,7 @@ exports.processSignal = function (req, res) {
         if (event.subscriptions && event.subscriptions.length) {
             var result = {};
             result.endpointsStatus = processMatch(event.subscriptions, signal);
-            result.processed = true ;
+            result.processed = true;
             result.signal = signal;
             result.dateTime = new Date();
 
