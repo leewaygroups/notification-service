@@ -21,7 +21,15 @@ function emailHandler(subscription, signal) {
     }
     
     // Send alert
-    mailer.sendMail(opts);
+    var error;
+    try {
+        mailer.sendMail(opts);
+        error = null;
+    } catch (err) {
+        error = err
+    }
+    
+    return error;
 }
 
 function apiHandler(subscription, signal) {
@@ -29,11 +37,16 @@ function apiHandler(subscription, signal) {
 }
 
 function processMatch(subscriptions, signal) {
+    var status = [];
     for (var i = 0; i < subscriptions.length; i++) {
 
         switch (subscriptions[i].endpointType) {
             case "EMAIL":
-                emailHandler(subscriptions[i], signal);
+                var error = emailHandler(subscriptions[i], signal);
+                status.push({
+                    endpoint: subscriptions[i].endpoint,
+                    error: error
+                })
                 break;
             case "API":
                 apiHandler(subscriptions[i], signal);
@@ -43,7 +56,7 @@ function processMatch(subscriptions, signal) {
         }
     }
 
-    return true;
+    return status;
 }
 
 exports.processSignal = function (req, res) {
@@ -52,8 +65,10 @@ exports.processSignal = function (req, res) {
     eventManager.findByName(signal.eventName).then(function (event) {
         if (event.subscriptions && event.subscriptions.length) {
             var result = {};
-            result.processed = processMatch(event.subscriptions, signal);
+            result.endpointsStatus = processMatch(event.subscriptions, signal);
+            result.processed = true ;
             result.signal = signal;
+            result.dateTime = new Date();
 
             result.logged = eventManager.logSignal(result);
             res.send(result);
