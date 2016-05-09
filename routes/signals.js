@@ -1,5 +1,5 @@
 var eventManager = require('../lib/db');
-
+var request = require('request')
 var mailer = require('../lib/mailer.js');
 var _ = require('underscore');
  
@@ -41,7 +41,17 @@ var apiProcessesor = {
         //TODO
     },
     handleCustom: function (subscription, signal) {
-        //TODO
+        try {
+            request(JSON.parse(subscription.options), function(err, response){
+                if(!err && response.statusCode === 200){
+                    //TODO:
+                }else{
+                    //TODO
+                }
+            })
+        } catch (error) {
+            //TODO
+        }
     }
 };
 
