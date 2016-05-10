@@ -10,6 +10,7 @@ var app = express();
 app.configure(function () {
     app.use(express.logger('dev'));
     app.use(express.bodyParser());
+    app.use(express.static(__dirname + '/public'));
 });
 
 console.log('registering event routes with express');
@@ -19,6 +20,15 @@ app.use(function (req, res, next) {
     next();
 });
 
+/** load the single view file 
+ *(angular will handle the page changes on the front-end)
+ * this route must be commented out for all server side tests to pass
+ */
+app.get('*', function (req, res) {
+    res.sendfile('./public/index.html');
+});
+
+/**APIs */
 app.get('/events', event.findAll);
 app.post('/events', event.registerEvent);
 app.get('/events/:name', event.findByName);

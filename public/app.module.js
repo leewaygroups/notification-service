@@ -1,0 +1,1 @@
+var rootApp = angular.module('rootApp', ["ui.router"]);

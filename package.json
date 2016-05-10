@@ -15,11 +15,20 @@
         "mongoose": "^4.4.14",
         "nodemailer": "0.5.x",
         "q": "^1.4.1",
+        "request": "^2.72.0",
         "underscore": "1.5.x"
     },
     "devDependencies": {
         "mocha": "*",
         "should": "1.2.x",
-        "supertest": "0.7.x"
+        "supertest": "0.7.x",
+        "coveralls": "^2.11.9",
+        "gulp": "^3.9.1",
+        "gulp-coveralls": "^0.1.4",
+        "gulp-istanbul": "^0.10.4",
+        "gulp-mocha": "^2.2.0",
+        "gulp-plumber": "^1.1.0",
+        "gulp-uglify": "^1.5.3",
+        "istanbul": "^0.4.3"
     }
 }
